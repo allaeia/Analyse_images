@@ -1,10 +1,12 @@
 function Td1()
     close all;
     %1 Fonction utiles
-    u=double(imread('LENA.BMP'));
-%     figure;imshow(u, [0 255]);
-%     figure;imagesc(u, [0 255]);
-%     figure;image(u);
+     u=double(imread('LENA.BMP'));
+%      figure;imshow(u, [0 255]);
+%      figure;imagesc(u, [0 255]);
+%      colormap(gray);
+%      figure;image(u);
+%      colormap(gray);
 
     %2 Histogramme
     %2 1 Transformation simples
@@ -133,7 +135,12 @@ function filtre()
     w2=imfilter(u,h2);
     figure;imshow(w1, [0 255]);%flou, on fait une moyenne ==> filtre moyennant
     figure;imshow(w2, [0 255]);%on fait les contours, opose du Laplacien ==> filtre mediant
-    
+    V = imnoise(uint8(u),'salt & pepper',0.1);
+    figure;imshow(V, [0 255]);
+    w5=imfilter(V,h1);
+    w6=imfilter(V,h2);
+    figure;imshow(w5, [0 255]);%flou, on fait une moyenne
+    figure;imshow(w6, [0 255]);
     bruit=u+(20*randn(size(u)));
     figure;imshow(bruit, [0 255]);
     w3=imfilter(bruit,h1);
@@ -141,20 +148,17 @@ function filtre()
     figure;imshow(w3, [0 255]);%flou, on fait une moyenne
     figure;imshow(w4, [0 255]);%on fait les contours, opose du Laplacien
     
-    V = imnoise(uint8(u),'salt & pepper',0.1);
-    figure;imshow(V, [0 255]);
-    w5=imfilter(V,h1);
-    w6=imfilter(V,h2);
-    figure;imshow(w5, [0 255]);%flou, on fait une moyenne
-    figure;imshow(w6, [0 255]);%on fait les contours, opose du Laplacien
+    %on fait les contours, opose du Laplacien
     
 end
 
 function Fourier()
 
+%lecture et affichage de l'image de depart
     u=double(imread('LENA.BMP'));
     figure;imshow(u, [0 255]);
 
+%tranformee de Fourier
     v=fft2(u);
     
     function w=norme(v)
@@ -166,7 +170,8 @@ function Fourier()
             end
         end        
     end
-    
+
+%calcul de la norme de la transformee de Fourier
     w=norme(v);
     
     function h=T(v,min,max)
@@ -177,6 +182,7 @@ function Fourier()
         end
     end
     
+%on recupere les valeurs extremes (minimale et maximale)de la norme
     [x,y]=size(w);
     min=w(1,1);
     max=w(1,1);
@@ -192,6 +198,8 @@ function Fourier()
         end
     end
         
+%On etale les valeurs de Fourier calculees sur l'espace affichable (de 0 a
+%255)
     V=zeros(x,y);
     for i=1:x
         for j=1:y
@@ -200,27 +208,38 @@ function Fourier()
         end
     end
     
+%On affiche le resultat recadre
     figure;imshow(fftshift(V), [0 255]);
     
 end
 
 function filtrage_freq()
+    %chargement de l'image
     u=double(imread('LENA.BMP'));
     figure;imshow(u, [0 255]);
-
+    %transformée de Fourier de l'image u
     v=fft2(u);
     
+    %Pour après, le filtre doit avoir la même taille que u pour pouvoir
+    %effectuer la multiplication terme à terme. Donc on créé une matrice
+    %nulle de même taille que l'image dont on ne remplis qu'une partie avec
+    %le filtre
     H=zeros(size(u));
+    %Création du masque carré de taille 5x5
     for i=1:5
         for j=1:5
-            H(i,j)=1/25;
+            H(i,j)=1/25;%Normalisation du filtre
         end
     end
+    %transformée de Fourier du Filtre
     hf=fft2(H);
     
+    %multiplication dans le domaine fréquentiel
     transfo=hf.*v;
     
+    %transformée inverse de la transformation
     final=ifft2(transfo);
+    %affichage du résultat
     figure;imshow(final, [0 255]);%C est un flou
     
     
