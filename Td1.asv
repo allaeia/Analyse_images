@@ -5,8 +5,8 @@ function Td1()
 %      figure;imshow(u, [0 255]);
 %      figure;imagesc(u, [0 255]);
 %      colormap(gray);
-%      figure;image(u);
-%      colormap(gray);
+      figure;image(u);
+      colormap([0.5 0.4);
 
     %2 Histogramme
     %2 1 Transformation simples
