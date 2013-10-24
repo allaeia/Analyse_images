@@ -12,7 +12,19 @@ function mtdt=morphofil(dep,x,y)
 %--------------------------------------------------------------------------
 
 % ???????
-
+    function img = close(f,x,y)
+        img = Erosion(Dilatation(f,x,y),x,y);
+    end
+    function img = open(f,x,y)
+        img = Dilatation(Erosion(f,x,y),x,y);
+    end
+    function img = top_hat(f,x,y)
+        img = f-open(f,x,y)
+    end
+    function img = top_hat_dual(f,x,y)
+        img = close(f,x,y) - f;
+    end
+    mtdt = max(top_hat(dep,x,y),top_hat_dual(dep,x,y));
 % -- Affichage
 figure;
 photo(mtdt,256);

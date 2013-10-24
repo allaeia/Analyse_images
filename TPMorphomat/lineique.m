@@ -1,4 +1,4 @@
-function bin=lineique(name1,name2,% ?????? )
+function bin=lineique(name1,name2)
 %------------------------------------------------------
 % function image=lineique(name1,name2,bas,haut)
 %
@@ -14,12 +14,16 @@ function bin=lineique(name1,name2,% ?????? )
 %------------------------------------------------------
 
 %-- Lecture de l'image de depart
-dep = ima2mat(name1);  
-
+disp(name1);
+%dep = ima2mat('ign1');
+dep = ima2mat(name1);
 % ?????????
+
+bin =;%filtr vert et filtre horizontal
 
 % -- Affichage du resultat
 Afficher_extraction(dep,bin);
 
 % -- Ecriture du resultat
 mat2ima(bin,name2);
+

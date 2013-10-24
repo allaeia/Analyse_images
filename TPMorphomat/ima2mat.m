@@ -5,8 +5,8 @@ function image = ima2mat(name)
 % Written by Lars Aurdal, ENST.
 
 % Open, read and close dimension file.
-
-dimfid = fopen([name '.dim'], 'r');
+a=[name, '.dim']
+dimfid = fopen([name, '.dim'], 'r');
 if ~(dimfid > 2)
   disp('Failed to open the dimension file corresponding to requested .ima file')
 else
