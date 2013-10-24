@@ -1,12 +1,12 @@
 function Td1()
     close all;
     %1 Fonction utiles
-     u=double(imread('LENA.BMP'));
-%      figure;imshow(u, [0 255]);
-%      figure;imagesc(u, [0 255]);
-%      colormap(gray);
-%      figure;image(u);
-%      colormap(gray);
+      u=double(imread('LENA.BMP'));
+%       figure;imshow(u, [0 255]);
+%       figure;imagesc(u, [0 255]);
+%       colormap(gray);
+%       figure;image(u);
+%       colormap(gray);
 
     %2 Histogramme
     %2 1 Transformation simples
@@ -47,7 +47,7 @@ function Td1()
 %    Fourier();
     
     %filtrage frequentiel
-%    filtrage_freq();
+    filtrage_freq();
 end
 
 function clown()
@@ -225,12 +225,38 @@ function filtrage_freq()
     %nulle de même taille que l'image dont on ne remplis qu'une partie avec
     %le filtre
     H=zeros(size(u));
+    [x y]=size(u);
     %Création du masque carré de taille 5x5
-    for i=1:5
-        for j=1:5
-            H(i,j)=1/25;%Normalisation du filtre
+    sum=0;
+    for i=1:3
+        for j=1:3
+            H(i,j)=1/25;
+            sum=sum+1;
         end
     end
+    
+    for i=x-1:x
+        for j=1:3
+            H(i,j)=1/25;
+            sum=sum+1;
+        end
+    end
+    
+    for i=x-1:x
+        for j=y-1:y
+            H(i,j)=1/25;
+            sum=sum+1;
+        end
+    end
+    
+    for i=1:3
+        for j=y-1:y
+            H(i,j)=1/25;
+            sum=sum+1;
+        end
+    end
+    
+    disp(sum);
     %transformée de Fourier du Filtre
     hf=fft2(H);
     
@@ -245,6 +271,7 @@ function filtrage_freq()
     
     
     h=ones(5)/25;
+    disp(h);
     w=imfilter(u,h);
     figure;imshow(w, [0 255]);%on obtient bien la meme chose
 end
