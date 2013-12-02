@@ -200,18 +200,18 @@ for i = 1 : NIT  % Boucle sur le nombre d'itérations
 
 
            %%%%%4-connexe
-           energie_courante = energie_courante + beta * sum(valeur_courante ~= value_around([2,4,6,8]));
-           energie_nouvelle = energie_nouvelle + beta * sum(valeur_nouvelle ~= value_around([2,4,6,8]));
+%            energie_courante = energie_courante + beta * sum(valeur_courante ~= value_around([2,4,6,8]));
+%            energie_nouvelle = energie_nouvelle + beta * sum(valeur_nouvelle ~= value_around([2,4,6,8]));
         
         
            %%%%%8-connexe
-%             tab_dif=(valeur_courante~=value_around');
-%             tmp_tri = tab_dif([2,4,6,8])|tab_dif([4,6,8,2]);
-%             energie_courante = energie_courante + beta*(sum(tab_dif + (tab_dif | circshift(tab_dif,1))) + sum(tmp_tri + (tmp_tri | tab_dif([3,5,7,1]))));
-%            
-%             tab_dif=(valeur_nouvelle~=value_around');
-%             tmp_tri = tab_dif([2,4,6,8])|tab_dif([4,6,8,2]);
-%             energie_nouvelle = energie_nouvelle + beta*(sum(tab_dif + (tab_dif | circshift(tab_dif,1))) + sum(tmp_tri + (tmp_tri | tab_dif([3,5,7,1]))));
+            tab_dif=(valeur_courante~=value_around');
+            tmp_tri = tab_dif([2,4,6,8])|tab_dif([4,6,8,2]);
+            energie_courante = energie_courante + beta*(sum(tab_dif + (tab_dif | circshift(tab_dif,1))) + sum(tmp_tri + (tmp_tri | tab_dif([3,5,7,1]))));
+           
+            tab_dif=(valeur_nouvelle~=value_around');
+            tmp_tri = tab_dif([2,4,6,8])|tab_dif([4,6,8,2]);
+            energie_nouvelle = energie_nouvelle + beta*(sum(tab_dif + (tab_dif | circshift(tab_dif,1))) + sum(tmp_tri + (tmp_tri | tab_dif([3,5,7,1]))));
 %             
 
             if(energie_nouvelle<=energie_courante || (rand<exp(-(energie_nouvelle-energie_courante)/tempe)))
