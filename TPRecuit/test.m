@@ -37,20 +37,21 @@ clear all;
 %     imseg = recuit('cerveau','param','cerveau_seg',beta,tempe,decrease,NIT);
 %     imseg2 = recuit('ptittest20','param','ptittest20_seg',beta,tempe,decrease,NIT);
     
-     beta = 2.0;
+%      beta = 2.0;
+%     tempe = 1.0;
+%     decrease = 0.99;
+%     NIT = 150;
+%     imseg = recuit('cerveau','param','cerveau_seg',beta,tempe,decrease,NIT);
+%     imseg2 = recuit('ptittest20','param','ptittest20_seg',beta,tempe,decrease,NIT);
+%     
+    
+     beta = .5;%0.1 initialement pour le cerveau
     tempe = 1.0;
     decrease = 0.99;
     NIT = 150;
-    imseg = recuit('cerveau','param','cerveau_seg',beta,tempe,decrease,NIT);
-    imseg2 = recuit('ptittest20','param','ptittest20_seg',beta,tempe,decrease,NIT);
+    imseg = recuit('cerveau2','param_cerveau','cerveau_seg',beta,tempe,decrease,NIT);
+    %imseg2 = recuit('ptittest20','param','ptittest20_seg',beta,tempe,decrease,NIT);
     
-    
-     beta = .5;
-    tempe = 1.0;
-    decrease = 0.99;
-    NIT = 150;
-    imseg = recuit('cerveau','param','cerveau_seg',beta,tempe,decrease,NIT);
-    imseg2 = recuit('ptittest20','param','ptittest20_seg',beta,tempe,decrease,NIT);
     
     
     
