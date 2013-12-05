@@ -33,22 +33,27 @@ function diffusion_isotropique()
     end
     
     std = sqrt(2*K*dt);
-    Gsigma = fspecial('gaussian',N,std);%/(4*pi*K*dt);
+    Gsigma = fspecial('gaussian',N-1,std);%/(4*pi*K*dt);
     sol2 = imfilter(u0,Gsigma,'symmetric');
     disp(norm(u-sol2));
     figure;imagesc(img/255);
+    title(['LENA origine']);
     colorbar;
     colormap(gray);
     figure;imagesc(u0/255);
+    title(['LENA bruitée']);
     colorbar;
     colormap(gray);
     figure;imagesc(u/255);
+    title(['LENA solution EDP, k=',num2str(k),', dt=',num2str(dt)]);
     colorbar;
     colormap(gray);
     figure;imagesc(sol2/255);
+    title(['LENA gaussienne']);
     colorbar;
     colormap(gray);
     figure;imagesc((u-sol2)/255);
+    title(['LENA différence gaussienne / EDP']);
     colorbar;
     colormap(gray);
 end
