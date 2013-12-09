@@ -1,5 +1,5 @@
 function diffusion_isotropique()
-
+    close all;
     img=imread('LENA.BMP');
     N=size(img,1);
     img=double(img(:,:,1));
@@ -7,7 +7,7 @@ function diffusion_isotropique()
     b=sigma_b * randn(size(img));
     u0 = img + b;
     u=u0;
-    K=500;
+    K=100000;
     dt=.1;
     
     for k = 1:K
