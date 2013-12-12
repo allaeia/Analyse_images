@@ -1,8 +1,8 @@
 clear all; close all; clc;
 
 % -- Parametres
-lambda = ??;                    % Ponderation de la regularisation de Tychonov d'ordre 1
-alpha = ??;                     % Pas de la descente de gradient
+lambda = 0.01;                    % Ponderation de la regularisation de Tychonov d'ordre 1
+alpha = 1/(2*(1+8*lambda));                     % Pas de la descente de gradient
 K = 1000;                       % Nomre d'iterations de la descente de gradient
 sig2 = 1;                       % Variance du bruit additif Gaussien
 
@@ -21,16 +21,17 @@ Hs(end+1-s(1):end,end+1-s(2):end) = h(1:s(1),1:s(2));
 Hs(1:s(1)+1,end+1-s(2):end) = h(s(1)+1:end,1:s(2));
 Hs(end+1-s(1):end,1:s(2)+1) = h(1:s(1),s(2)+1:end);
 
+
 %===== Pour l'image à la fin du TP ======
-% load('Hs_motion_blur');
-% y=double(imread('motion_blur.png'));
+ load('Hs_motion_blur');
+ x=double(imread('motion_blur.png'));
 %========================================
 
 H = fft2(Hs);       % H, Hx se calculera par ifft2(H.*fft2(x));
 Hetoile = conj(H);  % H*, H*x se calculera par ifft2(Hetoile.*fft2(x));
 
 % -- Construction de l'image observee y
-y = ifft2(H.*fft2(x)) + sqrt(sig2).*randn(size(x));
+y = x;%ifft2(H.*fft2(x)) + sqrt(sig2).*randn(size(x));
 % Affichage de l'image observee y
 figure(1);imagesc(y);colormap gray;title('Image observee'); axis image; axis off;
 
@@ -42,14 +43,15 @@ figure(2);imagesc(xsol);colormap gray; title('Solution exacte par Fourier'); axi
 % Initialisation
 xk = y;
 J = zeros(1, K);    % Fonction de cout
+err = zeros(1, K);  %Fonction d'erreur
 % Boucle principale
 for k=1:K
     % Calcul du gradient
-    gradJ =  ???
+    gradJ =  2*ifft2(Hetoile.*fft2(ifft2(H.*fft2(xk))-y));%-2*lambda*divm2(gradm2(xk));
     xk = xk - alpha*gradJ;
     % Calcul de l'erreur et la fonction de cout
-    J(k) = ???  % fonction cout
-    err(k) = ???   % erreur entre xk et l'image originale
+    J(k) = norm(ifft2(H.*fft2(xk))-y)^2;  % fonction cout
+    err(k) = norm(x-xk)^2;   % erreur entre xk et l'image originale
     % Affichage
     figure(3);imagesc(xk);colormap gray;title(sprintf('Iteration %d', k)); axis image;  axis off;   
 end
