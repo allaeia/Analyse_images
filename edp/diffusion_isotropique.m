@@ -7,7 +7,7 @@ function diffusion_isotropique()
     b=sigma_b * randn(size(img));
     u0 = img + b;
     u=u0;
-    K=100000;
+    K=100;
     dt=.1;
     
     for k = 1:K
