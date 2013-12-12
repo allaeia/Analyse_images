@@ -3,7 +3,7 @@ clear all; close all; clc;
 % -- Parametres
 lambda = 0.01;                    % Ponderation de la regularisation de Tychonov d'ordre 1
 alpha = 1/(2*(1+8*lambda));                     % Pas de la descente de gradient
-K = 1000;                       % Nomre d'iterations de la descente de gradient
+K = 2000;                       % Nomre d'iterations de la descente de gradient
 sig2 = 1;                       % Variance du bruit additif Gaussien
 
 % -- Lecture de l'image
